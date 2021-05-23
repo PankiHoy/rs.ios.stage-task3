@@ -34,7 +34,7 @@ Given a binary tree represented as array (preorder). Return level order traversa
 4
 │  ┌── 3
 └──2
-   └── 1
+   └── 1 
 ```
 **Preorder Traversal of Tree:**
 

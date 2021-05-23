@@ -138,8 +138,8 @@
 		8293EC9A26346C7100CEE768 = {
 			isa = PBXGroup;
 			children = (
-				8275DDEA264D754400838828 /* ios.stage-task.xctestplan */,
 				8293ECA526346C7100CEE768 /* ios.stage-task */,
+				8275DDEA264D754400838828 /* ios.stage-task.xctestplan */,
 				8293ECC126346C7500CEE768 /* ios.stage-taskTests */,
 				8293ECA426346C7100CEE768 /* Products */,
 			);
@@ -171,11 +171,11 @@
 		8293ECC126346C7500CEE768 /* ios.stage-taskTests */ = {
 			isa = PBXGroup;
 			children = (
-				7AF396602656A588003A569D /* LevelOrderTests.m */,
 				82ADF97E26566ACF00D81DB7 /* DateHelperTests.m */,
-				8293ECC426346C7500CEE768 /* Info.plist */,
-				82ADF97626558D7700D81DB7 /* LexicographicallyMinimalTests.m */,
 				82ADF97526558D7700D81DB7 /* PlayersSeparatorTest.m */,
+				82ADF97626558D7700D81DB7 /* LexicographicallyMinimalTests.m */,
+				7AF396602656A588003A569D /* LevelOrderTests.m */,
+				8293ECC426346C7500CEE768 /* Info.plist */,
 			);
 			path = "ios.stage-taskTests";
 			sourceTree = "<group>";
