@@ -7,9 +7,9 @@
 @property (strong, nonatomic) BTreeNode *leftBranch;
 
 -(instancetype)initWithValue:(NSNumber *)value;
--(NSArray *)getLevelOrderTraversal:(BTreeNode *)preorderTraversal;
 
 +(BTreeNode *)getRootFromPreorder:(NSArray *)preorderTraversal;
++ (NSArray *)getLevelOrderTraversal:(BTreeNode *)root;
 
 @end
 
@@ -25,45 +25,38 @@
     return self;
 }
 
-+ (instancetype)getRootFromPreorder:(NSArray *)preorder {
-     if (preorder.count == 0 || preorder[0] == [NSNull null]) {
-         return nil;
-     }
++ (BTreeNode *)getRootFromPreorder:(NSMutableArray *)preorder {
+    if (preorder.count == 0) {
+        return nil;
+    }
 
-     BTreeNode *tree = [[BTreeNode alloc] initWithValue:preorder[0]];
-
-     if (preorder.count == 1) {
-         return tree;
-     }
-
-     unsigned long rightNodePosition = preorder.count;
-     for (unsigned long i = 0; i < preorder.count; ++i) {
-         if (preorder[i] != [NSNull null] && [preorder[i] intValue] > [preorder[0] intValue]) {
-             rightNodePosition = i;
-             break;
-         }
-     }
-
-     if (rightNodePosition == preorder.count) {
-         tree.rightBranch = nil;
-     } else {
-         tree.rightBranch = [BTreeNode getRootFromPreorder:[preorder subarrayWithRange:NSMakeRange(rightNodePosition, preorder.count - rightNodePosition)]];
-     }
-
-     tree.leftBranch = [BTreeNode getRootFromPreorder:[preorder subarrayWithRange:NSMakeRange(1, rightNodePosition - 1)]];
-
-     return tree;
- }
-
-- (NSArray *)getLevelOrderTraversal:(BTreeNode *)root {
-    NSMutableArray *queue = [[NSMutableArray alloc] init];
-    NSMutableArray *resultArray = [[NSMutableArray alloc] init];
-    
-    if (root == nil) {
+    if (preorder.firstObject == [NSNull null]) {
+        [preorder removeObjectAtIndex:0];
         return nil;
     }
     
+    BTreeNode *root = [[BTreeNode alloc] initWithValue:preorder.firstObject];
+    [preorder removeObjectAtIndex:0];
+
+    root.leftBranch  = [BTreeNode getRootFromPreorder:preorder];
+    root.rightBranch = [BTreeNode getRootFromPreorder:preorder];
+    
+    return root;
+}
+
++ (NSArray *)getLevelOrderTraversal:(BTreeNode *)root {
+    NSMutableArray *queue = [[NSMutableArray alloc] init];
+    NSMutableArray *resultArray = [[NSMutableArray alloc] init];
+    
     [queue addObject:root];
+    
+    //    ┌── nil
+    //    4
+    //    │  ┌── nil
+    //    └──3
+    //       │  ┌── nil
+    //       └──2
+    //          └── 1
     
     while (queue.count != 0) {
         NSInteger size = queue.count;
@@ -89,6 +82,5 @@
 @end
 
 NSArray *LevelOrderTraversalForTree(NSArray *tree) {
-    BTreeNode *node = [BTreeNode getRootFromPreorder:[tree mutableCopy]];
-    return node == nil ? @[] : [node getLevelOrderTraversal:node];
+    return [BTreeNode getRootFromPreorder:[tree mutableCopy]] == nil ? @[] : [BTreeNode getLevelOrderTraversal:[BTreeNode getRootFromPreorder:[tree mutableCopy]]];
 }

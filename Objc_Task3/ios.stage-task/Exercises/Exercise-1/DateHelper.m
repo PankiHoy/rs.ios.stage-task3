@@ -8,8 +8,8 @@
     if (monthNumber > 12 || monthNumber < 1) {
         return nil;
     }
-    NSArray *monthArray = [[[NSDateFormatter alloc] init] monthSymbols];
-    return monthArray[monthNumber-1];
+    
+    return [[[NSDateFormatter alloc] init] monthSymbols][monthNumber-1];
 }
 
 #pragma mark - Second
@@ -27,7 +27,7 @@
     dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ru_RU"];
     long dayNumber = [[NSCalendar currentCalendar] component:NSCalendarUnitWeekday fromDate:date];
     
-    if (dayNumber) {
+    if ([[NSCalendar currentCalendar] component:NSCalendarUnitWeekday fromDate:date]) {
         return [[dateFormatter shortWeekdaySymbols] objectAtIndex:dayNumber-1];
     }
     
@@ -37,9 +37,7 @@
 #pragma mark - Fourth
 
 - (BOOL)isDateInThisWeek:(NSDate *)date {
-    long dateWeek = [[NSCalendar currentCalendar] component:NSCalendarUnitWeekOfYear fromDate:date];
-    long dateNow = [[NSCalendar currentCalendar] component:NSCalendarUnitWeekOfYear fromDate:[NSDate now]];
-    return dateWeek == dateNow ? YES : NO;
+    return [[NSCalendar currentCalendar] component:NSCalendarUnitWeekOfYear fromDate:date] == [[NSCalendar currentCalendar] component:NSCalendarUnitWeekOfYear fromDate:[NSDate now]] ? YES : NO;
 }
 
 @end

@@ -4,6 +4,7 @@
 
 - (NSInteger)dividePlayersIntoTeams:(NSArray<NSNumber *>*)ratingArray {
     NSMutableArray *resultArray = [[NSMutableArray alloc] init];
+    
     for (int i=0; i<ratingArray.count; i++) {
         for (int j=i+1; j<ratingArray.count; j++) {
             if ([ratingArray[i] integerValue] < [ratingArray[j] integerValue]) {

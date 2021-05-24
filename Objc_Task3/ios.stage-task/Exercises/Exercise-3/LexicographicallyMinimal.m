@@ -27,13 +27,8 @@
     }
     
     while (stringArray1.count > 0 && stringArray2.count>0) {
-        if ([[stringArray1 lastObject] compare:[stringArray2 lastObject]] ==  NSOrderedAscending) {
-            [resultString appendString:[stringArray1 lastObject]];
-            [stringArray1 removeLastObject];
-        } if ([[stringArray1 lastObject] compare:[stringArray2 lastObject]] == NSOrderedDescending){
-            [resultString appendString:[stringArray2 lastObject]];
-            [stringArray2 removeLastObject];
-        } else if (stringArray1.count != 0) {
+        if (([[stringArray1 lastObject] compare:[stringArray2 lastObject]] == NSOrderedAscending) ||
+            [[stringArray1 lastObject] compare:[stringArray2 lastObject]] == NSOrderedSame) {
             [resultString appendString:[stringArray1 lastObject]];
             [stringArray1 removeLastObject];
         } else {
@@ -42,13 +37,19 @@
         }
     }
     
-    while(stringArray1.count > 0) {
-        [resultString appendString:stringArray1.lastObject];
-        [stringArray1 removeLastObject];
-    }
-    while (stringArray2.count > 0) {
-        [resultString appendString:stringArray2.lastObject];
-        [stringArray2 removeLastObject];
+    switch (stringArray1.count) {
+        case 0:
+            while (stringArray2.count > 0) {
+                [resultString appendString:stringArray2.lastObject];
+                [stringArray2 removeLastObject];
+            }
+            break;
+        default:
+            while(stringArray1.count > 0) {
+                [resultString appendString:stringArray1.lastObject];
+                [stringArray1 removeLastObject];
+            }
+            break;
     }
     
     return resultString;
